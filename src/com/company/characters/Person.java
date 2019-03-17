@@ -19,6 +19,7 @@ public abstract class Person {
     public Item_Potion drinks;
     public Item_Armor shell;
     public Item_Artifact tool;
+    public boolean sp_moveUsed = false;
 
     static
     {
@@ -131,7 +132,6 @@ public abstract class Person {
 
 
 
-    public abstract void attack_Enemy (Arena battlefield, Status.Diraction turn);
-    public abstract void special_action (Arena battlefield, Status.Diraction turn);
-    public abstract void move (Arena battlefield);
+    public abstract boolean attack_Enemy (Arena field, Status.Diraction turn);
+    public abstract void special_action (Person enemy);
 }

@@ -23,7 +23,7 @@ public class Status {
     }
     public enum Diraction{
         Up,
-        Domn,
+        Down,
         Left,
         Right;
     }
