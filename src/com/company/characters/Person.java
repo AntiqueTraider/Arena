@@ -8,21 +8,35 @@ public abstract class Person {
     private int [] location= new int [2];
     private String name;
     private int attack;
-    private Status.Effects baf_debuf = Status.Effects.No_Effects;
-    private Status.Life_Status life = Status.Life_Status.Alive;
+    private Status.Effects baf_debuf;
+    private Status.Life_Status life;
     private Status.Gender sex;
     private int weigtht_can_carry;
-    private int weigth_carried = 0;
-    private int gold = 50;
+    private int weigth_carried;
+    private int gold;
     private int hp_MAX;
-    public Item_Potion drinks = null;
-    public Item_Armor shell = null;
-    public Item_Artifact tool = null;
+    public Status.Opponents team;
+    public Item_Potion drinks;
+    public Item_Armor shell;
+    public Item_Artifact tool;
+
     static
     {
         System.out.println("Поздравляю с созданием первого персонажа");
     }
 
+    public Person(){
+        baf_debuf = Status.Effects.No_Effects;
+        weigth_carried = 0;
+        gold = 30;
+        drinks = null;
+        shell = null;
+        tool = null;
+    }
+
+    public void setTeam( Status.Opponents team){
+        this.team = team;
+    }
     public void setWeigth_carried( int x) {
          weigth_carried = x;
     }
@@ -54,11 +68,14 @@ public abstract class Person {
     public void setGold (int x) {
         gold = x;
     }
-
     public void setHp_MAX(int hp_MAX) {
         this.hp_MAX = hp_MAX;
     }
 
+
+    public Status.Opponents getTeam() {
+        return team;
+    }
     public int getWeigth_carried() {
         return weigth_carried;
     }
@@ -114,6 +131,7 @@ public abstract class Person {
 
 
 
-    public abstract void attack_Enemy (Person enemy);
-    public abstract void Move (Arena battlefield);
+    public abstract void attack_Enemy (Arena battlefield, Status.Diraction turn);
+    public abstract void special_action (Arena battlefield, Status.Diraction turn);
+    public abstract void move (Arena battlefield);
 }

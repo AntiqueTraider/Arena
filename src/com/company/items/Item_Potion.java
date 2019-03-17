@@ -29,15 +29,20 @@ public class Item_Potion extends Item {
             System.out.println("Смерть зельями не лечится.");
         }
         else {
-           user.setHealth(user.getHealth() + healed_HP);
-           if (user.getLife() == Status.Life_Status.Alive && user.getHealth()>user.getHp_MAX()) {
-               user.setHealth(user.getHp_MAX());
+           if (user.getLife()== Status.Life_Status.Walking_Dead) {
+               user.setHealth(user.getHealth() - gethealed_HP());
+               if (user.getHealth() < 0) {
+                   System.out.println("В следующий раз дважды подумайте, прежде чем лечить нежить зельями для живых");
+                   user.setLife(Status.Life_Status.Dead);
+               }
            }
-           if (user.getLife() == Status.Life_Status.Walking_Dead && user.getHealth() >= 0) {
-                user.setLife(Status.Life_Status.Dead);
+           else{
+               user.setHealth(gethealed_HP()+user.getHealth());
+               if(user.getHealth()>user.getHp_MAX()) {
+                   user.setHealth(user.getHp_MAX());
+               }
            }
         }
-
     }
 
     @Override

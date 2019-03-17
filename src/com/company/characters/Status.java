@@ -11,8 +11,7 @@ public class Status {
         Bleeding,
         Poisoned,
         Light_Buff,
-        Blocking_Buff,
-        Healing_Buff;
+        Blocking_Buff;
     }
     public enum Gender {
         Male,
@@ -21,5 +20,11 @@ public class Status {
     public enum Opponents{
         Red,
         Blue;
+    }
+    public enum Diraction{
+        Up,
+        Domn,
+        Left,
+        Right;
     }
 }

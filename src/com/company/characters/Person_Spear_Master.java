@@ -1,11 +1,8 @@
-package com.company.characters.necromancer_army;
+package com.company.characters;
 
 import com.company.Arena;
-import com.company.characters.Person;
-import com.company.characters.Status;
-import com.company.characters.Undead_Features;
 
-public class Sceleton extends Person implements Undead_Features {
+public class Person_Spear_Master extends Person {
 
     @Override
     public void attack_Enemy(Arena battlefield, Status.Diraction turn) {
