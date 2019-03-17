@@ -4,27 +4,26 @@ public class Status {
     public enum Life_Status {
         Alive,
         Dead,
-        Walking_Dead;
+        Walking_Dead
     }
     public enum Effects {
         No_Effects,
         Bleeding,
         Poisoned,
-        Light_Buff,
-        Blocking_Buff;
+        Power_Up
     }
     public enum Gender {
         Male,
-        Female;
+        Female
     }
     public enum Opponents{
         Red,
-        Blue;
+        Blue
     }
     public enum Diraction{
         Up,
         Down,
         Left,
-        Right;
+        Right
     }
 }

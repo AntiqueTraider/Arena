@@ -80,6 +80,41 @@ public class Arena {
         }
 
     }
+    public void doCurse (int x,int y, Status.Opponents team){
+        if (team == Status.Opponents.Red && battle[x][y].code != ' ') {
+            switch (battle[x][y].code) {
+                case 'k':
+                    knights[0].setBaf_debuf(Status.Effects.Poisoned);
+                    break;
+                case 'p':
+                    paladins[0].setBaf_debuf(Status.Effects.Poisoned);
+                    break;
+                case 'g':
+                    gendalvs[0].setBaf_debuf(Status.Effects.Poisoned);
+                    break;
+                case 'n':
+                    pathologists[0].setBaf_debuf(Status.Effects.Poisoned);
+                    break;
+            }
+        }
+        else {
+            switch (battle[x][y].code) {
+                case 'k':
+                    knights[1].setBaf_debuf(Status.Effects.Poisoned);
+                    break;
+                case 'p':
+                    paladins[1].setBaf_debuf(Status.Effects.Poisoned);
+                    break;
+                case 'g':
+                    gendalvs[1].setBaf_debuf(Status.Effects.Poisoned);
+                    break;
+                case 'n':
+                    pathologists[1].setBaf_debuf(Status.Effects.Poisoned);
+                    break;
+            }
+        }
+
+    }
     public void  setBlue(String knight_name, String paladin_name,String wizzard_name,String ncr_name){
         knights[0] = new Person_Knight(knight_name, Status.Gender.Male, Status.Opponents.Blue);
         knights[0].setLocation(0,0);
