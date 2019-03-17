@@ -130,8 +130,6 @@ public abstract class Person {
     }
 
 
-
-
-    public abstract boolean attack_Enemy (Arena field, Status.Diraction turn);
-    public abstract void special_action (Person enemy);
+    public abstract boolean attack_Enemy (Arena field, Status.Diraction turn) throws Exception;
+    public abstract void special_action (Person enemy) throws Exception;
 }

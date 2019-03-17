@@ -20,7 +20,6 @@ public class Person_Paladin extends Person {
     @Override
     public boolean attack_Enemy(Arena field, Status.Diraction turn) {
         int[] x = getLocation();
-        int a;
         boolean key;
         switch (turn){
             case  Up:
