@@ -1,4 +1,6 @@
 package com.company.characters.necromancer_army;
 
-public class Sceleton extends Undead {
+import com.company.characters.Person;
+
+public class Sceleton extends Person {
 }

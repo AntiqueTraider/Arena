@@ -1,4 +1,6 @@
 package com.company.characters.necromancer_army;
 
-public class Undead_Dragon extends Undead {
+import com.company.characters.Person;
+
+public class Undead_Dragon extends Person {
 }

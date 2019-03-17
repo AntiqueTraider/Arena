@@ -1,4 +1,4 @@
 package com.company.characters;
 
-public class Person_Warloc_Necromancer extends Person_Warloc{
+public class Person_Warloc_Necromancer extends Person {
 }

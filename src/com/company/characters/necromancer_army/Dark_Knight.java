@@ -1,4 +1,6 @@
 package com.company.characters.necromancer_army;
 
-public class Dark_Knight extends Undead {
+import com.company.characters.Person;
+
+public class Dark_Knight extends Person {
 }

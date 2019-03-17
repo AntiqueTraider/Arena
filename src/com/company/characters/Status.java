@@ -1,15 +1,12 @@
 package com.company.characters;
 
 public class Status {
-    public enum Life_Status
-    {
+    public enum Life_Status {
         Alive,
-        Ingured,
         Dead,
         Walking_Dead;
     }
-    public enum Effects
-    {
+    public enum Effects {
         No_Effects,
         Bleeding,
         Poisoned,
@@ -17,5 +14,12 @@ public class Status {
         Blocking_Buff,
         Healing_Buff;
     }
-
+    public enum Gender {
+        Male,
+        Female;
+    }
+    public enum Opponents{
+        Red,
+        Blue;
+    }
 }
