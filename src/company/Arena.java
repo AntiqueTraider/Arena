@@ -154,6 +154,7 @@ public class Arena {
         battle[3][wide-1].setCell('n','r');
     }
     Scanner in = new Scanner(System.in);
+
     private void knightAttack(Person_Knight man){
         boolean key=false;
         System.out.println("Выбор направления атаки");
@@ -170,7 +171,8 @@ public class Arena {
         if (!key)
             knightAttack(man);
     }
-    public void personMove (Person_Knight man, char d) {
+
+    public void personMove (Person man, char d) {
         boolean key = false;
         char c ;
         if (man.getTeam() == Status.Opponents.Blue)
@@ -231,9 +233,9 @@ public class Arena {
         }
 
     }
+
     public void knightTurn(Person_Knight man){
         if (man != null && man.getLife() == Status.Life_Status.Alive) {
-            System.out.println("Ход "+man.getName());
             System.out.println("Допустимые действия:");
             System.out.println("Атака, Движение, Кровотечение, Купить, Передать Предмет, Характеристики");
             command = in.nextLine();
@@ -245,10 +247,17 @@ public class Arena {
             if (command.equals("Купить")){
 
             }
+            if (command.equals("Передать Предмет")){
+
+            }
+            if (command.equals("Характеристики")){
+
+            }
         }
     }
     public void gamePlay ( int rounds){
         System.out.println("Ход синей команды");
+        System.out.println("Ход "+knights[0].getName());
         knightTurn(knights[0]);
 
     }
