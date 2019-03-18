@@ -1,15 +1,19 @@
 package company;
 
 import company.characters.*;
+import company.items.*;
+
+import java.util.Scanner;
 
 /*
 Внутренний класс field будет содержать кодовый символ,
-для каждого объекта, свободной ячейки (" ")
+для каждого объекта, свободной ячейки ("*")
 далее - ниже
  */
 public class Arena {
     public final int wide=4;
     public int characters_teming;
+    public String command;
 
     private Person_Knight knights[] = new Person_Knight[2]; // k - for knights
     private Person_Paladin paladins[] = new Person_Paladin[2];// p - paladins
@@ -26,19 +30,21 @@ public class Arena {
 
         public field(char a) {
             code = a;
-            color='n';
+            color=' ';
         }
         public void setCell(char a, char c){
             code = a;
             color = c;
         }
+
     }
     public field  [][] battle = new field[wide][wide];
+
 
     public Arena (){
         for (int i = 0; i < wide; i++) {
             for (int j = 0; j < wide; j++)
-               battle[i][j]=new field(' ');
+               battle[i][j]=new field('*');
         }
 
     }
@@ -147,6 +153,103 @@ public class Arena {
         pathologists[1].setLocation(3,wide-1);
         battle[3][wide-1].setCell('n','r');
     }
+    Scanner in = new Scanner(System.in);
+    private void knightAttack(Person_Knight man){
+        boolean key=false;
+        System.out.println("Выбор направления атаки");
+        command = in.nextLine();
+        if (command.equals("Вверх"))
+            key = man.attack_Enemy(this, Status.Diraction.Up);
+        if (command.equals("Вниз"))
+            key = man.attack_Enemy(this, Status.Diraction.Down);
+        if (command.equals("Вправо"))
+            key = man.attack_Enemy(this, Status.Diraction.Right);
+        if (command.equals("Лево"))
+            key = man.attack_Enemy(this, Status.Diraction.Left);
 
+        if (!key)
+            knightAttack(man);
+    }
+    public void personMove (Person_Knight man, char d) {
+        boolean key = false;
+        char c ;
+        if (man.getTeam() == Status.Opponents.Blue)
+            c = 'b';
+        else
+            c = 'r';
+        System.out.println("Выберете направление движения");
+        command = in.nextLine();
+        int[] x = man.getLocation();
+        if (command.equals("Вверх") && x[1] > 0) {
+            for (int i = 0; i < wide; i++) {
+                for (int j = 0; j < wide; j++)
+                    if (battle[i][j].code == d && battle[i][j].color == c) {
+                        battle[i][j].setCell('*', ' ');
+                        battle[i][j - 1].setCell(d, c);
+                        key=true;
+                    }
+            }
+        }
+        if (command.equals("Вниз") && x[1]<wide-1) {
+            for (int i = 0; i < wide; i++) {
+                for (int j = 0; j < wide; j++)
+                    if (battle[i][j].code == d && battle[i][j].color == c) {
+                        battle[i][j].setCell('*', ' ');
+                        battle[i][j + 1].setCell(d, c);
+                        key=true;
+                    }
+            }
+        }
 
+        if (command.equals("Вправо") && x[0] < wide-1) {
+            for (int i = 0; i < wide; i++) {
+                for (int j = 0; j < wide-1; j++)
+                    if (battle[i][j].code == d && battle[i][j].color == c) {
+                        battle[i][j].setCell('*', ' ');
+                        battle[i+1][j].setCell(d, c);
+                        key=true;
+                    }
+            }
+        }
+
+        if (command.equals("Лево")&& x[0] > 0) {
+            for (int i = 0; i < wide; i++) {
+                for (int j = 0; j < wide-1; j++)
+                    if (battle[i][j].code == d && battle[i][j].color == c) {
+                        battle[i][j].setCell('*', ' ');
+                        battle[i-1][j].setCell(d, c);
+                        key=true;
+                    }
+            }
+        }
+
+        if (!key){
+            System.out.println("Данное направление движения невозможно, желаете выбрать");
+            command = in.nextLine();
+            if (command.equals("Нет"))
+            personMove(man,d);
+        }
+
+    }
+    public void knightTurn(Person_Knight man){
+        if (man != null && man.getLife() == Status.Life_Status.Alive) {
+            System.out.println("Ход "+man.getName());
+            System.out.println("Допустимые действия:");
+            System.out.println("Атака, Движение, Кровотечение, Купить, Передать Предмет, Характеристики");
+            command = in.nextLine();
+            if (command.equals("Атака"))
+                knightAttack(man);
+            if (command.equals("Движение")) {
+                personMove(man,'k');
+            }
+            if (command.equals("Купить")){
+
+            }
+        }
+    }
+    public void gamePlay ( int rounds){
+        System.out.println("Ход синей команды");
+        knightTurn(knights[0]);
+
+    }
 }

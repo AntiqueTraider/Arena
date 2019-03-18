@@ -141,19 +141,70 @@ public abstract class Person {
             System.out.println("Вес предметов - " + getWeigth_carried() + "|" + getWeigth_can_carry());
             System.out.println("Атака - " + getAttack());
             if (shell != null)
-                System.out.println("Имеется броня, занимаемый вес - " + shell.getWeigth());
+                System.out.println("Имеется броня, занимаемый вес - " + Item_Armor.weigth);
             if (tool != null)
-                System.out.println("Имеется броня, занимаемый вес - " + tool.getWeigth());
+                System.out.println("Имеется броня, занимаемый вес - " + Item_Artifact.weigth);
             if (drinks != null) {
                 System.out.println("Имеется зелье, в количестве  - " + drinks.getCount());
-                System.out.println(" общая стоимость " + drinks.getCount() * drinks.getWeigth());
+                System.out.println(" общий вес - " + drinks.getCount() * Item_Potion.weigth);
             }
         }
 
     }
 
+    public boolean sell_Artefact() {
+        if (getGold() >= Item_Artifact.cost && (getWeigth_can_carry() - getWeigth_carried() >= Item_Artifact.weigth) ){
+            if (tool == null) {
+                tool = new Item_Artifact();
+                setGold( getGold() - Item_Artifact.cost);
+                setWeigth_carried(getWeigth_carried()+Item_Artifact.weigth);
+                return true;
+            }
+            else {
+                System.out.println(getName()+" уже имеет артефакт, более одно использовать нельзя");
+                return false;
+            }
+        }
+        else {
+            System.out.println(getName()+" не может купить артефакт");
+            return false;
+        }
+    }
 
+    public boolean sell_Potion() {
+        if (getGold() >= Item_Potion.cost && (getWeigth_can_carry() - getWeigth_carried() >= Item_Potion.weigth) ){
+            setGold( getGold() - Item_Potion.cost);
+            setWeigth_carried(getWeigth_carried()+Item_Potion.weigth);
+            if (drinks == null)
+                drinks = new Item_Potion();
+            else
+                drinks.setCount(drinks.getCount()+1);
+            return true;
+        }
+        else {
+            System.out.println(getName()+" не может купить зелья");
+            return false;
+        }
+    }
 
+    public boolean sell_Armor() {
+        if (getGold() >= Item_Armor.cost && (getWeigth_can_carry() - getWeigth_carried() >= Item_Armor.weigth) ){
+            if (shell == null) {
+                setGold(getGold() - Item_Artifact.cost);
+                setWeigth_carried(getWeigth_carried() + Item_Armor.weigth);
+                shell = new Item_Armor();
+                return true;
+            }
+            else {
+                System.out.println(getName()+" уже имеет броню, более одной носить нельзя");
+                return false;
+            }
+        }
+        else {
+            System.out.println(getName()+" не может купить броню");
+            return false;
+        }
+    }
 
     public abstract boolean attack_Enemy (Arena field, Status.Diraction turn) ;
     public abstract void special_action (Person enemy);
