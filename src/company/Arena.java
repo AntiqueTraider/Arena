@@ -10,7 +10,6 @@ import company.characters.*;
 public class Arena {
     public final int wide=4;
     public int characters_teming;
-    public int rounds;
 
     private Person_Knight knights[] = new Person_Knight[2]; // k - for knights
     private Person_Paladin paladins[] = new Person_Paladin[2];// p - paladins
@@ -36,8 +35,7 @@ public class Arena {
     }
     public field  [][] battle = new field[wide][wide];
 
-    public Arena (int rounds){
-        this.rounds = rounds;
+    public Arena (){
         for (int i = 0; i < wide; i++) {
             for (int j = 0; j < wide; j++)
                battle[i][j]=new field(' ');
@@ -115,39 +113,40 @@ public class Arena {
         }
 
     }
-    public void  setBlue(String knight_name, String paladin_name,String wizzard_name,String ncr_name){
-        knights[0] = new Person_Knight(knight_name, Status.Gender.Male, Status.Opponents.Blue);
+    public void  setBlue(){
+        knights[0] = new Person_Knight("Blue Knight", Status.Gender.Male, Status.Opponents.Blue);
         knights[0].setLocation(0,0);
         battle[0][0].setCell('k','b');
 
-        paladins[0] = new Person_Paladin(paladin_name,Status.Gender.Female,Status.Opponents.Blue);
+        paladins[0] = new Person_Paladin("Blue Paladin",Status.Gender.Female,Status.Opponents.Blue);
         paladins[0].setLocation(1,0);
         battle[1][0].setCell('p','b');
 
-        gendalvs[0] = new Person_Wizzard(wizzard_name,Status.Gender.Female,Status.Opponents.Blue);
+        gendalvs[0] = new Person_Wizzard("Blue Wizzard",Status.Gender.Female,Status.Opponents.Blue);
         gendalvs[0].setLocation(2,0);
         battle[2][0].setCell('g','b');
 
-        pathologists[0] = new Person_Necromancer(ncr_name,Status.Gender.Male,Status.Opponents.Blue);
+        pathologists[0] = new Person_Necromancer("Blue Necromancer",Status.Gender.Male,Status.Opponents.Blue);
         pathologists[0].setLocation(3,0);
         battle[3][0].setCell('n','b');
     }
-    public void  setRed(String knight_name, String paladin_name,String wizzard_name,String ncr_name){
-        knights[1] = new Person_Knight(knight_name, Status.Gender.Male, Status.Opponents.Red);
+    public void  setRed(){
+        knights[1] = new Person_Knight("Red Knight", Status.Gender.Male, Status.Opponents.Red);
         knights[1].setLocation(0,wide-1);
         battle[0][wide-1].setCell('k','r');
 
-        paladins[1] = new Person_Paladin(paladin_name,Status.Gender.Female,Status.Opponents.Red);
+        paladins[1] = new Person_Paladin("Red Paladin",Status.Gender.Female,Status.Opponents.Red);
         paladins[1].setLocation(1,wide-1);
         battle[1][wide-1].setCell('p','r');
 
-        gendalvs[1] = new Person_Wizzard(wizzard_name,Status.Gender.Female,Status.Opponents.Red);
+        gendalvs[1] = new Person_Wizzard("Red Wizzard",Status.Gender.Female,Status.Opponents.Red);
         gendalvs[1].setLocation(2,wide-1);
         battle[2][wide-1].setCell('g','r');
 
-        pathologists[1] = new Person_Necromancer(ncr_name,Status.Gender.Male,Status.Opponents.Red);
+        pathologists[1] = new Person_Necromancer("Blue Necromancer",Status.Gender.Male,Status.Opponents.Red);
         pathologists[1].setLocation(3,wide-1);
         battle[3][wide-1].setCell('n','r');
     }
+
 
 }

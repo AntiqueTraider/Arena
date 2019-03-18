@@ -7,9 +7,20 @@ import company.characters.Undead_Features;
 
 public class Dark_Knight extends Person implements Undead_Features {
     private boolean undeadSP = false;
+
+    public Dark_Knight(Status.Opponents x) {
+        setHp_MAX(60);
+        setHealth(60);
+        setAttack(10);
+        setWeigtht_can_carry(15);
+        becomeUndead();
+        setName("Живой мертвец Черный Рыцарь");
+        setSex(Status.Gender.Male);
+        setTeam(x);
+    }
     @Override
     public void becomeUndead() {
-
+        setLife(Status.Life_Status.Walking_Dead);
     }
 
     @Override
@@ -80,13 +91,18 @@ public class Dark_Knight extends Person implements Undead_Features {
     }
 
     @Override
-    public boolean attack_Enemy(Arena field, Status.Diraction turn) throws Exception {
-        throw new Exception();
+    public void undeadShowCharacteristics() {
+
     }
 
     @Override
-    public void special_action(Person enemy) throws Exception {
-        throw new Exception();
+    public boolean attack_Enemy(Arena field, Status.Diraction turn) {
+        return false;
+    }
+
+    @Override
+    public void special_action(Person enemy)  {
+        System.out.println();
     }
 
 }

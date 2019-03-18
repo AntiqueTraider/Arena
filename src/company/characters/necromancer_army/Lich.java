@@ -8,9 +8,20 @@ import company.characters.Undead_Features;
 public class Lich extends Person implements Undead_Features {
     private boolean undeadSP = false;
 
+    public Lich(Status.Opponents x){
+        setHp_MAX(30);
+        setHealth(30);
+        setAttack(20);
+        setWeigtht_can_carry(10);
+        becomeUndead();
+        setName("Живой мертвец Лич");
+        setSex(Status.Gender.Male);
+        setTeam(x);
+    }
+
     @Override
     public void becomeUndead() {
-
+        setLife(Status.Life_Status.Walking_Dead);
     }
 
     @Override
@@ -83,12 +94,18 @@ public class Lich extends Person implements Undead_Features {
     }
 
     @Override
-    public boolean attack_Enemy(Arena field, Status.Diraction turn) throws Exception {
-        throw new Exception();
+    public void undeadShowCharacteristics() {
+
     }
 
     @Override
-    public void special_action(Person enemy) throws Exception {
-        throw new Exception();
+    public boolean attack_Enemy(Arena field, Status.Diraction turn) {
+        return false;
     }
+
+    @Override
+    public void special_action(Person enemy)  {
+        System.out.println();
+    }
+
 }

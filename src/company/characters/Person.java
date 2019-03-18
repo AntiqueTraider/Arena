@@ -12,7 +12,7 @@ public abstract class Person {
     private Status.Life_Status life;
     private Status.Gender sex;
     private int weigtht_can_carry;
-    private int weigth_carried;
+    private int weigth_carried = 0;
     private int gold;
     private int hp_MAX;
     public Status.Opponents team;
@@ -128,10 +128,33 @@ public abstract class Person {
             System.out.println("Уже мертво и хуже ему не станет");
 
     }
+    public void showCharacteristics (){
+        if (getLife() == Status.Life_Status.Dead)
+            System.out.println("Тело");
+        else{
+            System.out.println("Имя персонажа - " + getName());
+            System.out.println("Пол - " + getSex());
+            System.out.println("Команда - " + getTeam());
+            System.out.println("Здоровье - " + getHealth() + "|" + getHp_MAX());
+            System.out.println("Эффекты - " + getBaf_debuf());
+            System.out.println("Финансы - " + getGold());
+            System.out.println("Вес предметов - " + getWeigth_carried() + "|" + getWeigth_can_carry());
+            System.out.println("Атака - " + getAttack());
+            if (shell != null)
+                System.out.println("Имеется броня, занимаемый вес - " + shell.getWeigth());
+            if (tool != null)
+                System.out.println("Имеется броня, занимаемый вес - " + tool.getWeigth());
+            if (drinks != null) {
+                System.out.println("Имеется зелье, в количестве  - " + drinks.getCount());
+                System.out.println(" общая стоимость " + drinks.getCount() * drinks.getWeigth());
+            }
+        }
+
+    }
 
 
 
 
-    public abstract boolean attack_Enemy (Arena field, Status.Diraction turn) throws Exception;
-    public abstract void special_action (Person enemy) throws Exception;
+    public abstract boolean attack_Enemy (Arena field, Status.Diraction turn) ;
+    public abstract void special_action (Person enemy);
 }

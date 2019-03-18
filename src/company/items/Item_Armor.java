@@ -21,8 +21,8 @@ public class Item_Armor extends Item{
         }
     }
     @Override
-    public void pass_item(Person user, Person friend) throws Exception {
-        throw new Exception();
+    public void pass_item(Person user, Person friend) {
+        System.out.println();
     }
     @Override
     public void sell_item(Person user) {
