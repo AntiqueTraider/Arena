@@ -17,7 +17,6 @@ public class Dark_Knight extends Person implements Undead_Features {
         setName("Живой мертвец Черный Рыцарь");
         setSex(Status.Gender.Male);
         setTeam(x);
-        setGold(0);
     }
     @Override
     public void becomeUndead() {
@@ -27,6 +26,7 @@ public class Dark_Knight extends Person implements Undead_Features {
     @Override
     public void undeadSpecialMove() {
         if (!undeadSP) {
+            setHealth(getHp_MAX());
             System.out.println("Нежить избегает смерти в последний раз");
             undeadSP = true;
         }
@@ -91,10 +91,6 @@ public class Dark_Knight extends Person implements Undead_Features {
         return key;
     }
 
-    @Override
-    public void undeadShowCharacteristics() {
-
-    }
 
     @Override
     public boolean attack_Enemy(Arena field, Status.Diraction turn) {

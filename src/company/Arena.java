@@ -135,37 +135,43 @@ public class Arena {
 
         paladins[0] = new Person_Paladin("Blue Paladin",Status.Gender.Female,Status.Opponents.Blue);
         paladins[0].setLocation(1,0);
-        battle[1][0].setCell('p','b');
+        battle[0][1].setCell('p','b');
 
         gendalvs[0] = new Person_Wizzard("Blue Wizzard",Status.Gender.Female,Status.Opponents.Blue);
         gendalvs[0].setLocation(2,0);
-        battle[2][0].setCell('g','b');
+        battle[0][2].setCell('g','b');
 
         pathologists[0] = new Person_Necromancer("Blue Necromancer",Status.Gender.Male,Status.Opponents.Blue);
         pathologists[0].setLocation(3,0);
-        battle[3][0].setCell('n','b');
+        battle[0][3].setCell('n','b');
     }
     public void  setRed(){
         knights[1] = new Person_Knight("Red Knight", Status.Gender.Male, Status.Opponents.Red);
         knights[1].setLocation(0,wide-1);
-        battle[0][wide-1].setCell('k','r');
+        battle[wide-1][0].setCell('k','r');
 
         paladins[1] = new Person_Paladin("Red Paladin",Status.Gender.Female,Status.Opponents.Red);
         paladins[1].setLocation(1,wide-1);
-        battle[1][wide-1].setCell('p','r');
+        battle[wide-1][1].setCell('p','r');
 
         gendalvs[1] = new Person_Wizzard("Red Wizzard",Status.Gender.Female,Status.Opponents.Red);
         gendalvs[1].setLocation(2,wide-1);
-        battle[2][wide-1].setCell('g','r');
+        battle[wide-1][2].setCell('g','r');
 
         pathologists[1] = new Person_Necromancer("Blue Necromancer",Status.Gender.Male,Status.Opponents.Red);
         pathologists[1].setLocation(3,wide-1);
-        battle[3][wide-1].setCell('n','r');
+        battle[wide-1][3].setCell('n','r');
     }
 
 
     Scanner in = new Scanner(System.in);
 
+    private boolean bodyCheck (){
+        return ((knights[0].getLife()==Status.Life_Status.Dead) || (knights[1].getLife()==Status.Life_Status.Dead) ||
+                  (paladins[0].getLife()==Status.Life_Status.Dead) || (paladins[1].getLife()==Status.Life_Status.Dead) ||
+                        (gendalvs[0].getLife()==Status.Life_Status.Dead) || (gendalvs[1].getLife()==Status.Life_Status.Dead) ||
+                                (pathologists[0].getLife()==Status.Life_Status.Dead) || (pathologists[1].getLife()==Status.Life_Status.Dead ));
+    }
     private void rec (Person man){
        anybodyTurn(man);
     }
@@ -176,6 +182,15 @@ public class Arena {
             System.out.println("Спец прием лечит на любого союзника");
         if (man instanceof Person_Wizzard)
             System.out.println("Спец прием увеличивает атаку любого союзика");
+    }
+
+    private void effectDamage (Person man){
+        if (man.getLife() != Status.Life_Status.Walking_Dead) {
+            if (man.getBaf_debuf() == Status.Effects.Bleeding)
+                man.take_Damage(10);
+            if (man.getBaf_debuf() == Status.Effects.Poisoned)
+                man.take_Damage(5);
+        }
     }
 
     private void personMove (Person man, char d) {
@@ -244,7 +259,6 @@ public class Arena {
         }
 
     }
-
     private void inventory (Person man){
         boolean key = false;
         System.out.println("Допустимые действия:");
@@ -409,6 +423,7 @@ public class Arena {
             }
             if (command.equals("Характеристики")){
                 man.showCharacteristics();
+                sp_info(man);
                 //System.out.print("Спец прием - Кровотечение");
                 if (man.sp_moveUsed)
                     System.out.println(" использован");
@@ -418,20 +433,75 @@ public class Arena {
             }
         }
     }
+    private void spownUndead (Person_Necromancer man){
+         man.special_action(man);
+    }
+    private void necrTurn (Person_Necromancer man){
+        int i;
+        if (man.getTeam() == Status.Opponents.Blue)
+            i = 0;
+        else
+            i = 1;
+        if (man != null && man.getLife() == Status.Life_Status.Alive) {
+            System.out.println("Допустимые действия:");
+            System.out.print("Атака, Движение, Перерождение, Инвентарь, Характеристики");
+            if (bodyCheck() && !man.sp_moveUsed)
+                System.out.print("Понднять Нежить");
+            if (lichs[i] != null || dark_knights[i] != null) {
+                System.out.print("Контроль Нежити");
+            }
+            System.out.println();
+            command = in.nextLine();
+            if (command.equals("Атака"))
+                anybodyAttack(man);
+            else if (command.equals("Движение")) {
+                personMove(man,'k');
+            }else if (command.equals("Инвентарь")){
+                inventory(man);
+            }else if (command.equals("Характеристики")){
+                man.showCharacteristics();
+               //
+                if (man.sp_moveUsed)
+                    System.out.println(" использован");
+                else
+                    System.out.println(" не использован");
+                anybodyTurn(man);
+            }else if(command.equals("Поднять Нежить"))
+                spownUndead(man);
+        }
+        else {
+
+        }
+    }
+
+
     public void gamePlay (int rounds){
         for (int i = 0; i < wide; i++) {
             for (int j = 0; j < wide; j++)
                 System.out.println(battle[j][i].code + "" + battle[j][i].color + " ");
             System.out.println();
         }
-        // урон с эффектов
+
+        effectDamage(knights[0]);  effectDamage(knights[1]);
+        effectDamage(paladins[0]);  effectDamage(paladins[1]);
+        effectDamage(gendalvs[0]);  effectDamage(gendalvs[1]);
+        effectDamage(pathologists[0]);  effectDamage(pathologists[1]);
 
         System.out.println("Ход синей команды");
         System.out.println("Ход "+knights[0].getName());
         anybodyTurn(knights[0]);
         System.out.println("Ход "+paladins[0].getName());
         anybodyTurn(paladins[0]);
-        System.out.println("Ход "+paladins[0].getName());
-        anybodyTurn(paladins[0]);
+        System.out.println("Ход "+gendalvs[0].getName());
+        anybodyTurn(gendalvs[0]);
+
+
+        System.out.println("Ход красной команды");
+        System.out.println("Ход "+knights[1].getName());
+        anybodyTurn(knights[1]);
+        System.out.println("Ход "+paladins[1].getName());
+        anybodyTurn(paladins[1]);
+        System.out.println("Ход "+gendalvs[1].getName());
+        anybodyTurn(gendalvs[1]);
     }
 }
