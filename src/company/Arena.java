@@ -1,5 +1,5 @@
 package company;
-
+// поменял 0 и 1 в х в мувах
 import company.characters.*;
 import company.characters.necromancer_army.Dark_Knight;
 import company.characters.necromancer_army.Lich;
@@ -42,6 +42,16 @@ public class Arena {
 
     }
     public field  [][] battle = new field[wide][wide];
+    private int [] find (char c, char d, int [] y){
+        for (int i = 0; i < wide; i++) {
+            for (int j = 0; j < wide; j++)
+                if (battle[i][j].code == d && battle[i][j].color == c) {
+                    y[0] = i;
+                    y[1] = j;
+                }
+        }
+        return y;
+    }
 
 
     public Arena (){
@@ -203,51 +213,39 @@ public class Arena {
         System.out.println("Выберете направление движения");
         command = in.nextLine();
         int[] x = man.getLocation();
-
-        if (command.equals("Вверх") && x[1] > 0) {
-            for (int i = 0; i < wide; i++) {
-                for (int j = 0; j < wide; j++)
-                    if (battle[i][j].code == d && battle[i][j].color == c) {
-                        battle[i][j].setCell('*', ' ');
-                        battle[i- 1][j ].setCell(d, c);
-                        key=true;
-                        break;
-                    }
+        int []y = new int[2];
+        if (command.equals("Вверх") && x[0] > 0) {
+            y=find(c,d,y);
+            if (battle[y[0]-1][y[1]].code == '*' && battle[y[0]-1][y[1]].color == ' ' ) {
+                key = true;
+                battle[y[0]][y[1]].setCell('*', ' ');
+                battle[y[0] - 1][y[1]].setCell(d, c);
             }
         }
-        if (command.equals("Вниз") && x[1]<wide-1) {
-            for (int i = 0; i < wide; i++) {
-                for (int j = 0; j < wide; j++)
-                    if (battle[i][j].code == d && battle[i][j].color == c) {
-                        battle[i][j].setCell('*', ' ');
-                        battle[i+ 1][j ].setCell(d, c);
-                        key=true;
-                        break;
-                    }
+        if (command.equals("Вниз") && x[0]<wide-1) {
+            y=find(c,d,y);
+            if (battle[y[0]+1][y[1]].code == '*' && battle[y[0]+1][y[1]].color == ' ' ) {
+                key = true;
+                battle[y[0]][y[1]].setCell('*', ' ');
+                battle[y[0] + 1][y[1]].setCell(d, c);
             }
         }
 
-        if (command.equals("Вправо") && x[0] < wide-1) {
-            for (int i = 0; i < wide; i++) {
-                for (int j = 0; j < wide-1; j++)
-                    if (battle[i][j].code == d && battle[i][j].color == c) {
-                        battle[i][j].setCell('*', ' ');
-                        battle[i][j+1].setCell(d, c);
-                        key=true;
-                        break;
-                    }
+        if (command.equals("Вправо") && x[1] < wide-1) {
+            y=find(c,d,y);
+            if (battle[y[0]][y[1]+1].code == '*' && battle[y[0]][y[1]+1].color == ' ' ) {
+                key = true;
+                battle[y[0]][y[1]].setCell('*', ' ');
+                battle[y[0]][y[1] + 1].setCell(d, c);
             }
         }
 
-        if (command.equals("Лево")&& x[0] > 0) {
-            for (int i = 0; i < wide; i++) {
-                for (int j = 0; j < wide-1; j++)
-                    if (battle[i][j].code == d && battle[i][j].color == c) {
-                        battle[i][j].setCell('*', ' ');
-                        battle[i][j-1].setCell(d, c);
-                        key=true;
-                        break;
-                    }
+        if (command.equals("Влево")&& x[1] > 0) {
+            y=find(c,d,y);
+            if (battle[y[0]][y[1]-1].code == '*' && battle[y[0]][y[1]-1].color == ' ' ) {
+                key = true;
+                battle[y[0]][y[1]].setCell('*', ' ');
+                battle[y[0]][y[1] - 1].setCell(d, c);
             }
         }
 
@@ -406,7 +404,15 @@ public class Arena {
             if (command.equals("Атака"))
                 anybodyAttack(man);
             else if (command.equals("Движение")) {
-                personMove(man,'k');
+                if (man instanceof Person_Knight)
+                    personMove(man,'k');
+                if (man instanceof Person_Paladin)
+                    personMove(man,'p');
+                if (man instanceof Person_Wizzard)
+                    personMove(man,'g');
+                if (man instanceof Person_Necromancer)
+                    personMove(man,'n');
+
             }else if (command.equals("Инвентарь")){
                 inventory(man);
             }else if (command.equals("Спец прием")) {
@@ -488,7 +494,6 @@ public class Arena {
         }
     }
     public void gamePlay (int rounds){
-        showBattleField();
 
         effectDamage(knights[0]);  effectDamage(knights[1]);
         effectDamage(paladins[0]);  effectDamage(paladins[1]);
@@ -526,6 +531,6 @@ public class Arena {
 
         System.out.println("Ход "+gendalvs[1].getName());
         anybodyTurn(gendalvs[1]);
-
+        gamePlay(rounds-1);
     }
 }
