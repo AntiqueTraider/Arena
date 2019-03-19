@@ -3,14 +3,10 @@ package company.items;
 import company.characters.Person;
 
 public class Item_Armor implements Item{
-    public static int use_Range;
-    public static int weigth;
-    public static int cost;
+    public static int weigth = 10;
+    public static int cost = 10;
 
     public Item_Armor(){
-        cost = 10 ;
-        weigth = 10;
-        use_Range = 0;
     }
 
     @Override

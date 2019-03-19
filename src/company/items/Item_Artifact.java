@@ -4,15 +4,12 @@ import company.characters.Person;
 
 public class Item_Artifact implements Item {
     private int attack_bonus;
-    public static int use_Range;
-    public static int weigth;
-    public static int cost;
+    public static int use_Range = 1;
+    public static int weigth = 5;
+    public static int cost = 20;
 
     public Item_Artifact(){
         attack_bonus = 20;
-        cost = 20;
-        weigth = 5;
-        use_Range = 5;
     }
 
 

@@ -10,7 +10,6 @@ public class Status {
         No_Effects,
         Bleeding,
         Poisoned,
-        Power_Up
     }
     public enum Gender {
         Male,

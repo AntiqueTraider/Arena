@@ -71,7 +71,6 @@ public class Person_Wizzard extends Person {
     @Override
     public void special_action(Person enemy) {
         if (!sp_moveUsed) {
-            enemy.setBaf_debuf(Status.Effects.Power_Up);
             enemy.setAttack(enemy.getAttack() + getAttack());
             sp_moveUsed = true;
         }

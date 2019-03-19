@@ -3,18 +3,17 @@ package company.items;
 import company.characters.Person;
 import company.characters.Status;
 
+import javax.net.ssl.SSLEngineResult;
+
 public class Item_Potion implements Item {
     private int count;
     private int healed_HP;
-    public static int use_Range;
-    public static int weigth;
-    public static int cost;
+    public static int use_Range = 2;
+    public static int weigth = 1;
+    public static int cost = 2;
     public Item_Potion(){
         count = 1;
         healed_HP = 50;
-        cost = 2 ;
-        weigth = 1;
-        use_Range = 2;
     }
 
     public void setCount(int count) {
@@ -44,6 +43,7 @@ public class Item_Potion implements Item {
                if(user.getHealth()>user.getHp_MAX()) {
                    user.setHealth(user.getHp_MAX());
                }
+               user.setBaf_debuf(Status.Effects.No_Effects);
            }
         }
     }

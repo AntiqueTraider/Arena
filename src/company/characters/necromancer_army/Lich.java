@@ -17,6 +17,7 @@ public class Lich extends Person implements Undead_Features {
         setName("Живой мертвец Лич");
         setSex(Status.Gender.Male);
         setTeam(x);
+        setGold(0);
     }
 
     @Override

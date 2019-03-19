@@ -17,6 +17,7 @@ public class Dark_Knight extends Person implements Undead_Features {
         setName("Живой мертвец Черный Рыцарь");
         setSex(Status.Gender.Male);
         setTeam(x);
+        setGold(0);
     }
     @Override
     public void becomeUndead() {
