@@ -135,32 +135,32 @@ public class Arena {
 
         paladins[0] = new Person_Paladin("Blue Paladin",Status.Gender.Female,Status.Opponents.Blue);
         paladins[0].setLocation(1,0);
-        battle[0][1].setCell('p','b');
+        battle[1][0].setCell('p','b');
 
         gendalvs[0] = new Person_Wizzard("Blue Wizzard",Status.Gender.Female,Status.Opponents.Blue);
         gendalvs[0].setLocation(2,0);
-        battle[0][2].setCell('g','b');
+        battle[2][0].setCell('g','b');
 
         pathologists[0] = new Person_Necromancer("Blue Necromancer",Status.Gender.Male,Status.Opponents.Blue);
         pathologists[0].setLocation(3,0);
-        battle[0][3].setCell('n','b');
+        battle[3][0].setCell('n','b');
     }
     public void  setRed(){
         knights[1] = new Person_Knight("Red Knight", Status.Gender.Male, Status.Opponents.Red);
         knights[1].setLocation(0,wide-1);
-        battle[wide-1][0].setCell('k','r');
+        battle[0][wide-1].setCell('k','r');
 
         paladins[1] = new Person_Paladin("Red Paladin",Status.Gender.Female,Status.Opponents.Red);
         paladins[1].setLocation(1,wide-1);
-        battle[wide-1][1].setCell('p','r');
+        battle[1][wide-1].setCell('p','r');
 
         gendalvs[1] = new Person_Wizzard("Red Wizzard",Status.Gender.Female,Status.Opponents.Red);
         gendalvs[1].setLocation(2,wide-1);
-        battle[wide-1][2].setCell('g','r');
+        battle[2][wide-1].setCell('g','r');
 
         pathologists[1] = new Person_Necromancer("Blue Necromancer",Status.Gender.Male,Status.Opponents.Red);
         pathologists[1].setLocation(3,wide-1);
-        battle[wide-1][3].setCell('n','r');
+        battle[3][wide-1].setCell('n','r');
     }
 
 
@@ -209,8 +209,9 @@ public class Arena {
                 for (int j = 0; j < wide; j++)
                     if (battle[i][j].code == d && battle[i][j].color == c) {
                         battle[i][j].setCell('*', ' ');
-                        battle[i][j - 1].setCell(d, c);
+                        battle[i- 1][j ].setCell(d, c);
                         key=true;
+                        break;
                     }
             }
         }
@@ -219,8 +220,9 @@ public class Arena {
                 for (int j = 0; j < wide; j++)
                     if (battle[i][j].code == d && battle[i][j].color == c) {
                         battle[i][j].setCell('*', ' ');
-                        battle[i][j + 1].setCell(d, c);
+                        battle[i+ 1][j ].setCell(d, c);
                         key=true;
+                        break;
                     }
             }
         }
@@ -230,8 +232,9 @@ public class Arena {
                 for (int j = 0; j < wide-1; j++)
                     if (battle[i][j].code == d && battle[i][j].color == c) {
                         battle[i][j].setCell('*', ' ');
-                        battle[i+1][j].setCell(d, c);
+                        battle[i][j+1].setCell(d, c);
                         key=true;
+                        break;
                     }
             }
         }
@@ -241,8 +244,9 @@ public class Arena {
                 for (int j = 0; j < wide-1; j++)
                     if (battle[i][j].code == d && battle[i][j].color == c) {
                         battle[i][j].setCell('*', ' ');
-                        battle[i-1][j].setCell(d, c);
+                        battle[i][j-1].setCell(d, c);
                         key=true;
+                        break;
                     }
             }
         }
@@ -433,8 +437,10 @@ public class Arena {
             }
         }
     }
-    private void spownUndead (Person_Necromancer man){
-         man.special_action(man);
+    /*private void spownUndead (Person_Necromancer man){
+        int i,x,y;
+         System.out.println("Из какой команды встанет мертвец");
+         command = in.nextLine();
     }
     private void necrTurn (Person_Necromancer man){
         int i;
@@ -467,41 +473,59 @@ public class Arena {
                     System.out.println(" не использован");
                 anybodyTurn(man);
             }else if(command.equals("Поднять Нежить"))
-                spownUndead(man);
+                //spownUndead(man);
         }
         else {
 
         }
     }
-
-
-    public void gamePlay (int rounds){
+    */
+    private void showBattleField(){
         for (int i = 0; i < wide; i++) {
             for (int j = 0; j < wide; j++)
-                System.out.println(battle[j][i].code + "" + battle[j][i].color + " ");
+                System.out.print(battle[i][j].code + "" + battle[i][j].color + " ");
             System.out.println();
         }
+    }
+    public void gamePlay (int rounds){
+        showBattleField();
 
         effectDamage(knights[0]);  effectDamage(knights[1]);
         effectDamage(paladins[0]);  effectDamage(paladins[1]);
         effectDamage(gendalvs[0]);  effectDamage(gendalvs[1]);
         effectDamage(pathologists[0]);  effectDamage(pathologists[1]);
 
+        showBattleField();
+
         System.out.println("Ход синей команды");
         System.out.println("Ход "+knights[0].getName());
         anybodyTurn(knights[0]);
+
+        showBattleField();
+
         System.out.println("Ход "+paladins[0].getName());
         anybodyTurn(paladins[0]);
+
+        showBattleField();
+
         System.out.println("Ход "+gendalvs[0].getName());
         anybodyTurn(gendalvs[0]);
 
+        showBattleField();
 
         System.out.println("Ход красной команды");
         System.out.println("Ход "+knights[1].getName());
         anybodyTurn(knights[1]);
+
+        showBattleField();
+
         System.out.println("Ход "+paladins[1].getName());
         anybodyTurn(paladins[1]);
+
+        showBattleField();
+
         System.out.println("Ход "+gendalvs[1].getName());
         anybodyTurn(gendalvs[1]);
+
     }
 }
