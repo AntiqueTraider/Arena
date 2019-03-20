@@ -238,9 +238,7 @@ public class Arena {
             y=find(c,d,y);
             if (battle[y[0]][y[1]+1].code == '*' && battle[y[0]][y[1]+1].color == ' ' ) {
                 key = true;
-                System.out.println(x[0]+" "+ x[1]);
                 man.setLocation(x[0], x[1]+1);
-                System.out.println(x[0]+" "+ (x[1]));
                 battle[y[0]][y[1]].setCell('*', ' ');
                 battle[y[0]][y[1] + 1].setCell(d, c);
             }

@@ -25,7 +25,7 @@ public class Person_Paladin extends Person {
             case  Up:
                 if (x[0]>0) {
                     key = true;
-                    field.doDamage(x[1],x[0]-1,getAttack(),getTeam());
+                    field.doDamage(x[0]-1,x[1],getAttack(),getTeam());
                 }
                 else
                     key=false;
@@ -33,7 +33,7 @@ public class Person_Paladin extends Person {
             case  Down:
                 if (x[0]<field.wide-1) {
                     key = true;
-                    field.doDamage(x[1],x[0]+1,getAttack(),getTeam());
+                    field.doDamage(x[0]+1,x[1],getAttack(),getTeam());
                 }
                 else
                     key=false;
@@ -41,7 +41,7 @@ public class Person_Paladin extends Person {
             case  Right:
                 if (x[1]<field.wide-1) {
                     key = true;
-                    field.doDamage(x[1]+1,x[0],getAttack(),getTeam());
+                    field.doDamage(x[0],x[1]+1,getAttack(),getTeam());
                 }
                 else
                     key=false;
@@ -49,7 +49,7 @@ public class Person_Paladin extends Person {
             case  Left:
                 if (x[0]>0) {
                     key = true;
-                    field.doDamage(x[1]-1,x[0],getAttack(),getTeam());
+                    field.doDamage(x[0],x[1]-1,getAttack(),getTeam());
                 }
                 else
                     key=false;
