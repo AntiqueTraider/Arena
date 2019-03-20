@@ -218,6 +218,7 @@ public class Arena {
             y=find(c,d,y);
             if (battle[y[0]-1][y[1]].code == '*' && battle[y[0]-1][y[1]].color == ' ' ) {
                 key = true;
+                man.setLocation(x[0]-1, x[1]);
                 battle[y[0]][y[1]].setCell('*', ' ');
                 battle[y[0] - 1][y[1]].setCell(d, c);
             }
@@ -226,6 +227,7 @@ public class Arena {
             y=find(c,d,y);
             if (battle[y[0]+1][y[1]].code == '*' && battle[y[0]+1][y[1]].color == ' ' ) {
                 key = true;
+                man.setLocation(x[0]+1, x[1]);
                 battle[y[0]][y[1]].setCell('*', ' ');
                 battle[y[0] + 1][y[1]].setCell(d, c);
             }
@@ -233,8 +235,10 @@ public class Arena {
 
         if (command.equals("Вправо") && x[1] < wide-1) {
             y=find(c,d,y);
+            System.out.println(1);
             if (battle[y[0]][y[1]+1].code == '*' && battle[y[0]][y[1]+1].color == ' ' ) {
                 key = true;
+                man.setLocation(x[0], x[1]+1);
                 battle[y[0]][y[1]].setCell('*', ' ');
                 battle[y[0]][y[1] + 1].setCell(d, c);
             }
@@ -244,6 +248,7 @@ public class Arena {
             y=find(c,d,y);
             if (battle[y[0]][y[1]-1].code == '*' && battle[y[0]][y[1]-1].color == ' ' ) {
                 key = true;
+                man.setLocation(x[0], x[1]-1);
                 battle[y[0]][y[1]].setCell('*', ' ');
                 battle[y[0]][y[1] - 1].setCell(d, c);
             }

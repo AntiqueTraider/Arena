@@ -22,40 +22,40 @@ public class Person_Wizzard extends Person {
         switch (turn) {
 
                 case Up:
-                   if (x[1]>0){
+                   if (x[0]>0){
                      key=true;
-                     for(int i = 0; i < x[1]; i++)
-                        field.doDamage(x[0], i, getAttack(), getTeam());
+                     for(int i = 0; i < x[0]; i++)
+                        field.doDamage(x[1], i, getAttack(), getTeam());
                    }
                    else
                         key = false;
                 break;
 
                 case Down:
-                    if (x[1]<field.wide-1){
+                    if (x[0]<field.wide-1){
                         key = true;
-                        for(int i = x[1]+1; i < field.wide; i++)
-                            field.doDamage(x[0], i, getAttack(), getTeam());
+                        for(int i = x[0]+1; i < field.wide; i++)
+                            field.doDamage(x[1], i, getAttack(), getTeam());
                     }
                     else
                         key = false;
                 break;
 
                 case Right:
-                     if (x[0]<field.wide-1){
+                     if (x[1]<field.wide-1){
                          key = true;
-                         for(int i = x[0]+1; i < field.wide; i++)
-                             field.doDamage(i, x[1], getAttack(), getTeam());
+                         for(int i = x[1]+1; i < field.wide; i++)
+                             field.doDamage(i, x[0], getAttack(), getTeam());
                      }
                      else
                          key = false;
                 break;
 
                 case Left:
-                    if (x[0]>0){
+                    if (x[1]>0){
                         key=true;
-                        for(int i = 0; i < x[0]; i++)
-                            field.doDamage(i, x[1], getAttack(), getTeam());
+                        for(int i = 0; i < x[1]; i++)
+                            field.doDamage(i, x[0], getAttack(), getTeam());
                     }
                     else
                         key = false;
