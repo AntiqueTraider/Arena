@@ -20,9 +20,9 @@ public class Arena {
     private Person_Paladin paladins[] = new Person_Paladin[2];// p - paladins
     private Person_Wizzard gendalvs[] = new Person_Wizzard[2];//g - wizzards
     private Person_Necromancer pathologists[]= new Person_Necromancer[2];//n - necros
-    private Dark_Knight dark_knights[] = new Dark_Knight[2]; //d - dark knights
+    private Dark_Knight dark_knights[] = new Dark_Knight[2]; //r - dark knights
     private Lich lichs[] = new Lich [2]; //l - lichs
-
+                                        //d - dead
     static
     {
         System.out.println("Поздравляю с созданием первой Арены");
@@ -72,15 +72,23 @@ public class Arena {
             switch (battle[x][y].code) {
                 case 'k':
                     knights[0].take_Damage(damage);
+                    if (knights[0].getLife() == Status.Life_Status.Dead)
+                        battle[x][y].setCell('d',battle[x][y].color);
                     break;
                 case 'p':
                     paladins[0].take_Damage(damage);
+                    if (paladins[0].getLife() == Status.Life_Status.Dead)
+                        battle[x][y].setCell('d',battle[x][y].color);
                     break;
                 case 'g':
                     gendalvs[0].take_Damage(damage);
+                    if (gendalvs[0].getLife() == Status.Life_Status.Dead)
+                        battle[x][y].setCell('d',battle[x][y].color);
                     break;
                 case 'n':
                     pathologists[0].take_Damage(damage);
+                    if (pathologists[0].getLife() == Status.Life_Status.Dead)
+                        battle[x][y].setCell('d',battle[x][y].color);
                     break;
             }
         }
@@ -89,15 +97,23 @@ public class Arena {
             switch (battle[x][y].code) {
                 case 'k':
                     knights[1].take_Damage(damage);
+                    if (knights[1].getLife() == Status.Life_Status.Dead)
+                        battle[x][y].setCell('d',battle[x][y].color);
                     break;
                 case 'p':
                     paladins[1].take_Damage(damage);
+                    if (paladins[1].getLife() == Status.Life_Status.Dead)
+                        battle[x][y].setCell('d',battle[x][y].color);
                     break;
                 case 'g':
                     gendalvs[1].take_Damage(damage);
+                    if (gendalvs[1].getLife() == Status.Life_Status.Dead)
+                        battle[x][y].setCell('d',battle[x][y].color);
                     break;
                 case 'n':
                     pathologists[1].take_Damage(damage);
+                    if (pathologists[1].getLife() == Status.Life_Status.Dead)
+                        battle[x][y].setCell('d',battle[x][y].color);
                     break;
             }
         }
@@ -196,11 +212,18 @@ public class Arena {
     }
 
     private void effectDamage (Person man){
+        int []x=man.getLocation();
         if (man.getLife() != Status.Life_Status.Walking_Dead) {
-            if (man.getBaf_debuf() == Status.Effects.Bleeding)
+            if (man.getBaf_debuf() == Status.Effects.Bleeding) {
                 man.take_Damage(10);
-            if (man.getBaf_debuf() == Status.Effects.Poisoned)
+                if (man.getLife() == Status.Life_Status.Dead)
+                    battle[x[0]][x[1]].setCell('d',battle[x[0]][x[1]].color);
+            }
+            if (man.getBaf_debuf() == Status.Effects.Poisoned) {
                 man.take_Damage(5);
+                if (man.getLife() == Status.Life_Status.Dead)
+                    battle[x[0]][x[1]].setCell('d',battle[x[0]][x[1]].color);
+            }
         }
     }
 
@@ -448,10 +471,59 @@ public class Arena {
             }
         }
     }
-    /*private void spownUndead (Person_Necromancer man){
-        int i,x,y;
+    private void spownUndead (Person_Necromancer man){
+         char a;
+        if (man.getTeam() == Status.Opponents.Blue)
+            a = 'b';
+        else
+            a = 'r';
          System.out.println("Из какой команды встанет мертвец");
          command = in.nextLine();
+         char c, d='*';
+         int i;
+         if (command.equals("Синяя")) {
+            c = 'b';
+            i = 0;
+         }
+         else {
+            c = 'r';
+            i = 1;
+         }
+
+         System.out.println("Можно поднять:");
+         if (knights[i].getLife() == Status.Life_Status.Dead){
+            System.out.println("Рыцарь");
+         }
+         if (paladins[i].getLife() == Status.Life_Status.Dead){
+            System.out.println("Паладин");
+         }
+         if (gendalvs[i].getLife() == Status.Life_Status.Dead){
+            System.out.println("Маг");
+         }
+         if (pathologists[i].getLife() == Status.Life_Status.Dead){
+            System.out.println("Некр");
+         }
+         command = in.nextLine();
+         if (command.equals("Рыцаарь"))
+             d='k';
+         if (command.equals("Паладин"))
+             d='p';
+         if (command.equals("Маг"))
+             d='g';
+         if (command.equals("Некр"))
+             d='n';
+         int [] x= new int [2];
+                 x = find(d,c,x);
+         if (d == 'k' || d =='p') {
+             battle[x[0]][x[1]].setCell('r', a);
+             dark_knights[i] = new Dark_Knight(man.getTeam());
+             dark_knights[i].setLocation(x[0],x[1]);
+         }
+         else {
+             battle[x[0]][x[1]].setCell('l', a);
+             lichs[i]=new Lich(man.getTeam());
+             lichs[i].setLocation(x[0],x[1]);
+         }
     }
     private void necrTurn (Person_Necromancer man){
         int i;
@@ -484,13 +556,13 @@ public class Arena {
                     System.out.println(" не использован");
                 anybodyTurn(man);
             }else if(command.equals("Поднять Нежить"))
-                //spownUndead(man);
+                spownUndead(man);
         }
         else {
 
         }
     }
-    */
+
     private void showBattleField(){
         for (int i = 0; i < wide; i++) {
             for (int j = 0; j < wide; j++)
@@ -499,6 +571,8 @@ public class Arena {
         }
     }
     public void gamePlay (int rounds){
+
+        System.out.println("Раундов до конца - "+rounds);
 
         effectDamage(knights[0]);  effectDamage(knights[1]);
         effectDamage(paladins[0]);  effectDamage(paladins[1]);
