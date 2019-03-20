@@ -18,20 +18,25 @@ public class Person_Knight extends Person {
     @Override
     public boolean attack_Enemy(Arena field, Status.Diraction turn) {
         int[] x = getLocation();
-        int a, b;
+        int a, b, c;
         boolean key;
+        if (turn == Status.Diraction.Up||turn == Status.Diraction.Left)
+            c=-1;
+        else
+            c=1;
         if ((turn == Status.Diraction.Up && x[0] > 0) || (turn == Status.Diraction.Down && x[0] < field.wide - 1)) {
             a = (x[1] - 1 < 0) ? x[1] : x[1] - 1;
             b = (x[1] + 1 > field.wide - 1) ? x[1] : x[1] + 1;
             for (int i = a; i <= b; i++)
-                field.doDamage(i, x[0], getAttack(), getTeam());
+                field.doDamage(x[0]+c, i, getAttack(), getTeam());
             key = true;
         } else {
             if ((turn == Status.Diraction.Left && x[1] > 0) || (turn == Status.Diraction.Right && x[1] < field.wide - 1)) {
-                a = (x[0] - 1 < 0) ? x[1] : x[0] - 1;
+                a = (x[0] - 1 < 0) ? x[0] : x[0] - 1;
                 b = (x[0] + 1 > field.wide - 1) ? x[0] : x[0] + 1;
+                System.out.println(a+" "+b);
                 for (int i = a; i <= b; i++)
-                    field.doDamage(x[1], i, getAttack(), getTeam());
+                    field.doDamage(i,x[1]+c , getAttack(), getTeam());
                 key = true;
             } else {
                 key = false;
