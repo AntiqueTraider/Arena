@@ -5,7 +5,7 @@ import company.Arena;
 public class Person_Necromancer extends Person implements Undead_Features{
 
 
-    private boolean undeadSP=false;
+    public boolean undeadSP=false;
     public Person_Necromancer(String name, Status.Gender gen, Status.Opponents team){
         setHp_MAX(200);
         setHealth(200);
@@ -25,26 +25,16 @@ public class Person_Necromancer extends Person implements Undead_Features{
             switch (turn) {
 
             case Up:
-                if (x[1]>0){
+                if (x[0]>0){
                     key=true;
-                    for(int i = 0; i < x[1]; i++)
-                        field.doCurse(x[0], i, getTeam());
+                    for(int i = 0; i < x[0]; i++)
+                        field.doCurse(i, x[1], getTeam());
                 }
                 else
                     key = false;
                 break;
 
             case Down:
-                if (x[1]<field.wide-1){
-                    key = true;
-                    for(int i = x[1]+1; i < field.wide; i++)
-                        field.doCurse(x[0], i, getTeam());
-                }
-                else
-                    key = false;
-                break;
-
-            case Right:
                 if (x[0]<field.wide-1){
                     key = true;
                     for(int i = x[0]+1; i < field.wide; i++)
@@ -54,11 +44,21 @@ public class Person_Necromancer extends Person implements Undead_Features{
                     key = false;
                 break;
 
+            case Right:
+                if (x[1]<field.wide-1){
+                    key = true;
+                    for(int i = x[1]+1; i < field.wide; i++)
+                        field.doCurse(x[0], i, getTeam());
+                }
+                else
+                    key = false;
+                break;
+
             case Left:
-                if (x[0]>0){
+                if (x[1]>0){
                     key=true;
-                    for(int i = 0; i < x[0]; i++)
-                        field.doCurse(i, x[1], getTeam());
+                    for(int i = 0; i < x[1]; i++)
+                        field.doCurse(x[0], i, getTeam());
                 }
                 else
                     key = false;
@@ -106,8 +106,8 @@ public class Person_Necromancer extends Person implements Undead_Features{
                 case  Up:
                     if (x[0]>0) {
                         key = true;
-                        field.doDamage(x[1],x[0]-1,getAttack(),getTeam());
-                        field.doCurse(x[1],x[0]-1,getTeam());
+                        field.doDamage(x[0]-1, x[1],getAttack(),getTeam());
+                        field.doCurse(x[0]-1, x[1],getTeam());
                     }
                     else
                         key=false;
@@ -115,8 +115,8 @@ public class Person_Necromancer extends Person implements Undead_Features{
                 case  Down:
                     if (x[0]<field.wide-1) {
                         key = true;
-                        field.doDamage(x[1],x[0]+1,getAttack(),getTeam());
-                        field.doCurse(x[1],x[0]+1,getTeam());
+                        field.doDamage(x[0]+1,x[1],getAttack(),getTeam());
+                        field.doCurse(x[0]+1,x[1],getTeam());
                     }
                     else
                         key=false;
@@ -124,8 +124,8 @@ public class Person_Necromancer extends Person implements Undead_Features{
                 case  Right:
                     if (x[1]<field.wide-1) {
                         key = true;
-                        field.doDamage(x[1]+1,x[0],getAttack(),getTeam());
-                        field.doCurse(x[1]+1,x[0],getTeam());
+                        field.doDamage(x[0],x[1]+1,getAttack(),getTeam());
+                        field.doCurse(x[0],x[1]+1,getTeam());
                     }
                     else
                         key=false;
@@ -133,8 +133,8 @@ public class Person_Necromancer extends Person implements Undead_Features{
                 case  Left:
                     if (x[0]>0) {
                         key = true;
-                        field.doDamage(x[1]-1,x[0],getAttack(),getTeam());
-                        field.doCurse(x[1]-1,x[0],getTeam());
+                        field.doDamage(x[0],x[1]-1,getAttack(),getTeam());
+                        field.doCurse(x[0],x[1]-1,getTeam());
                     }
                     else
                         key=false;

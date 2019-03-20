@@ -6,7 +6,7 @@ import company.characters.Status;
 import company.characters.Undead_Features;
 
 public class Dark_Knight extends Person implements Undead_Features {
-    private boolean undeadSP = false;
+    public boolean undeadSP = false;
 
     public Dark_Knight(Status.Opponents x) {
         setHp_MAX(60);
@@ -41,17 +41,28 @@ public class Dark_Knight extends Person implements Undead_Features {
         switch (turn) {
 
             case Up:
-                if (x[1]>0){
-                    a = (x[1]-2 >= 0)? x[1]-2 : x[1]-1;
+                if (x[0]>0){
+                    a = (x[0]-2 >= 0)? x[0]-2 : x[0]-1;
                     key=true;
-                    for(int i = a; i < x[1]; i++)
-                        field.doDamage(x[0], i, getAttack(), getTeam());
+                    for(int i = a; i < x[0]; i++)
+                        field.doDamage(i, x[1], getAttack(), getTeam());
                 }
                 else
                     key = false;
                 break;
 
             case Down:
+                if (x[0]<field.wide-1){
+                    a = (x[0]+2 <= field.wide-1) ? x[0]+2 : x[0]+1;
+                    key = true;
+                    for(int i = x[0]+1; i < a; i++)
+                        field.doDamage(i, x[1], getAttack(), getTeam());
+                }
+                else
+                    key = false;
+                break;
+
+            case Right:
                 if (x[1]<field.wide-1){
                     a = (x[1]+2 <= field.wide-1) ? x[1]+2 : x[1]+1;
                     key = true;
@@ -62,23 +73,12 @@ public class Dark_Knight extends Person implements Undead_Features {
                     key = false;
                 break;
 
-            case Right:
-                if (x[0]<field.wide-1){
-                    a = (x[0]+2 <= field.wide-1) ? x[0]+2 : x[1]+1;
-                    key = true;
-                    for(int i = x[0]+1; i < a; i++)
-                        field.doDamage(i, x[1], getAttack(), getTeam());
-                }
-                else
-                    key = false;
-                break;
-
             case Left:
-                if (x[0]>0){
-                    a = (x[0]-2 >= 0)? x[0]-2 : x[0]-1;
+                if (x[1]>0){
+                    a = (x[1]-2 >= 0)? x[1]-2 : x[1]-1;
                     key=true;
-                    for(int i = a; i < x[0]; i++)
-                        field.doDamage(i, x[1], getAttack(), getTeam());
+                    for(int i = a; i < x[1]; i++)
+                        field.doDamage(x[0], i, getAttack(), getTeam());
                 }
                 else
                     key = false;
