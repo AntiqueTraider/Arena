@@ -7,7 +7,7 @@ public class Person_Wizzard extends Person {
     public Person_Wizzard(String name, Status.Gender gen, Status.Opponents team){
         setHp_MAX(150);
         setHealth(150);
-        setAttack(30);
+        setAttack(150);
         setWeigtht_can_carry(5);
         setLife(Status.Life_Status.Alive);
         setName(name);

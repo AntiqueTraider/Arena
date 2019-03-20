@@ -120,7 +120,7 @@ public class Arena {
 
     }
     public void doCurse (int x,int y, Status.Opponents team){
-        if (team == Status.Opponents.Red && battle[x][y].code != ' ') {
+        if (team == Status.Opponents.Red) {
             switch (battle[x][y].code) {
                 case 'k':
                     knights[0].setBaf_debuf(Status.Effects.Poisoned);
@@ -185,7 +185,7 @@ public class Arena {
         gendalvs[1].setLocation(2,wide-1);
         battle[2][wide-1].setCell('g','r');
 
-        pathologists[1] = new Person_Necromancer("Blue Necromancer",Status.Gender.Male,Status.Opponents.Red);
+        pathologists[1] = new Person_Necromancer("Red Necromancer",Status.Gender.Male,Status.Opponents.Red);
         pathologists[1].setLocation(3,wide-1);
         battle[3][wide-1].setCell('n','r');
     }
@@ -200,7 +200,10 @@ public class Arena {
                                 (pathologists[0].getLife()==Status.Life_Status.Dead) || (pathologists[1].getLife()==Status.Life_Status.Dead ));
     }
     private void rec (Person man){
-       anybodyTurn(man);
+        if (man instanceof Person_Necromancer)
+            necrTurn((Person_Necromancer)man);
+        else
+            anybodyTurn(man);
     }
     private void sp_info (Person man){
         if (man instanceof Person_Knight)
@@ -339,7 +342,7 @@ public class Arena {
                          System.out.println("Артефакт");
                     if(man.drinks != null)
                          System.out.println(man.drinks.getCount()+" Зелий");
-
+                    command = in.nextLine();
                     if (command.equals("Зелье Рыцарь")) {
                          man.drinks.pass_item(man,knights[i]);
                     }
@@ -404,7 +407,7 @@ public class Arena {
             key = man.attack_Enemy(this, Status.Diraction.Down);
         if (command.equals("Вправо"))
             key = man.attack_Enemy(this, Status.Diraction.Right);
-        if (command.equals("Лево"))
+        if (command.equals("Влево"))
             key = man.attack_Enemy(this, Status.Diraction.Left);
 
         if (!key)
@@ -489,47 +492,60 @@ public class Arena {
     }
     private void spownUndead (Person_Necromancer man){
          char a;
-        if (man.getTeam() == Status.Opponents.Blue)
+         int i,j;
+        if (man.getTeam() == Status.Opponents.Blue){
             a = 'b';
-        else
+            i = 0;
+        }
+        else {
             a = 'r';
+            i = 1;
+        }
          System.out.println("Из какой команды встанет мертвец");
          command = in.nextLine();
          char c, d='*';
-         int i;
+
          if (command.equals("Синяя")) {
             c = 'b';
-            i = 0;
+            j = 0;
          }
          else {
             c = 'r';
-            i = 1;
+            j = 1;
          }
 
          System.out.println("Можно поднять:");
-         if (knights[i].getLife() == Status.Life_Status.Dead){
+         if (knights[j].getLife() == Status.Life_Status.Dead){
             System.out.println("Рыцарь");
          }
-         if (paladins[i].getLife() == Status.Life_Status.Dead){
+         if (paladins[j].getLife() == Status.Life_Status.Dead){
             System.out.println("Паладин");
          }
-         if (gendalvs[i].getLife() == Status.Life_Status.Dead){
+         if (gendalvs[j].getLife() == Status.Life_Status.Dead){
             System.out.println("Маг");
          }
-         if (pathologists[i].getLife() == Status.Life_Status.Dead){
+         if (pathologists[j].getLife() == Status.Life_Status.Dead){
             System.out.println("Некр");
          }
          command = in.nextLine();
-         if (command.equals("Рыцаарь"))
-             d='k';
-         if (command.equals("Паладин"))
-             d='p';
-         if (command.equals("Маг"))
-             d='g';
-         if (command.equals("Некр"))
-             d='n';
          int [] x= new int [2];
-                 x = find(d,c,x);
+         if (command.equals("Рыцаарь")) {
+             d = 'k';
+             x =knights[j].getLocation();
+         }
+         if (command.equals("Паладин")) {
+             d = 'p';
+             x =paladins[j].getLocation();
+         }
+         if (command.equals("Маг")) {
+             d = 'g';
+             x =gendalvs[j].getLocation();
+         }
+         if (command.equals("Некр")) {
+             d = 'n';
+             x =pathologists[j].getLocation();
+         }
+
          if (d == 'k' || d =='p') {
              battle[x[0]][x[1]].setCell('r', a);
              dark_knights[i] = new Dark_Knight(man.getTeam());
@@ -540,6 +556,7 @@ public class Arena {
              lichs[i]=new Lich(man.getTeam());
              lichs[i].setLocation(x[0],x[1]);
          }
+         man.special_action(man);
     }
     private void controlUndead (Person_Necromancer man){
         int i;
@@ -548,7 +565,7 @@ public class Arena {
         else
             i=1;
         System.out.println("Допустимые действия");
-        System.out.print("Атака, Движение, Спец прием, Инвентарь, Характеристики");
+        System.out.println("Атака, Движение, Спец прием, Инвентарь, Характеристики");
         command = in.nextLine();
         if (command.equals("Характеристики")){
             if (dark_knights[i] != null) {
@@ -609,16 +626,16 @@ public class Arena {
             System.out.println("Допустимые действия:");
             System.out.print("Атака, Движение, Перерождение, Инвентарь, Характеристики");
             if (bodyCheck() && !man.sp_moveUsed)
-                System.out.print("Понднять Нежить");
-            if (lichs[i] != null || dark_knights[i] != null) {
-                System.out.print("Контроль Нежити");
+                System.out.print(", Понднять Нежить");
+            if (man.sp_moveUsed) {
+                System.out.print(", Контроль Нежити");
             }
             System.out.println();
             command = in.nextLine();
             if (command.equals("Атака"))
                 anybodyAttack(man);
             else if (command.equals("Движение")) {
-                personMove(man,'k');
+                personMove(man,'n');
             }
             else if (command.equals("Инвентарь")){
                 inventory(man);
@@ -630,18 +647,18 @@ public class Arena {
                     System.out.println(" использован");
                 else
                     System.out.println(" не использован");
-                anybodyTurn(man);
+                necrTurn(man);
             }
             else if(command.equals("Поднять Нежить"))
                 spownUndead(man);
-            else if(command.equals("Контроль нежити"))
+            else if(command.equals("Контроль Нежити"))
                 controlUndead(man);
             else
                 man.becomeUndead();
         }
         else {
             System.out.println("Допустимые действия:");
-            System.out.print("Атака, Движение, Спец прием, Инвентарь, Характеристики");
+            System.out.println("Атака, Движение, Спец прием, Инвентарь, Характеристики");
             command = in.nextLine();
             if (command.equals("Атака")){
                 undeadnotSP(man);
@@ -655,7 +672,7 @@ public class Arena {
             else if (command.equals("Характеристики")){
                 man.showCharacteristics();
                 System.out.println("Спец прием нежити - 1 раз восстановить свое здоровье");
-                if (dark_knights[i].undeadSP)
+                if (man.undeadSP)
                     System.out.println(" использован");
                 else
                     System.out.println(" не использован");
@@ -715,8 +732,8 @@ public class Arena {
 
 
         showBattleField();
-        System.out.println("Ход "+pathologists[0].getName());
-        necrTurn(pathologists[0]);
+        System.out.println("Ход "+pathologists[1].getName());
+        necrTurn(pathologists[1]);
 
         gamePlay(rounds-1);
     }

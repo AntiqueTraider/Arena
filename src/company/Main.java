@@ -9,6 +9,6 @@ public class Main {
       Arena boom = new Arena();
       boom.setRed();
       boom.setBlue();
-      boom.gamePlay(2);
+      boom.gamePlay(10);
     }
 }

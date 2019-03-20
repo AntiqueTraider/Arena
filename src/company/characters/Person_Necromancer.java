@@ -75,10 +75,7 @@ public class Person_Necromancer extends Person implements Undead_Features{
 
     @Override
     public void special_action(Person enemy) {
-        if (!sp_moveUsed && enemy.getLife()== Status.Life_Status.Dead) {
-            enemy = null;
             sp_moveUsed = true;
-        }
     }
 
     @Override

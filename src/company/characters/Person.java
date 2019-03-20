@@ -116,7 +116,7 @@ public abstract class Person {
         if (life == Status.Life_Status.Alive) {
             if (shell == null) {
                 health -= damage;
-                if (health < 0)
+                if (health <= 0)
                     life = Status.Life_Status.Dead;
             }
             else {

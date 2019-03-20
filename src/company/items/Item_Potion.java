@@ -61,7 +61,7 @@ public class Item_Potion implements Item {
     public void pass_item(Person user, Person friend) {
             int [] x1=user.getLocation();
             int [] x2=friend.getLocation();
-            if (friend.getWeigth_can_carry() - friend.getWeigth_carried() >= weigth && Math.abs(x1[0]-x2[0])+Math.abs(x1[1]-x2[1]) == use_Range){
+            if (friend.getWeigth_can_carry() - friend.getWeigth_carried() >= weigth && Math.abs(x1[0]-x2[0])+Math.abs(x1[1]-x2[1]) <= use_Range){
                 user.setWeigth_carried(user.getWeigth_carried() - weigth);
                 if (count>1)
                     count--;
