@@ -1,6 +1,6 @@
-package company.items;
+package com.company.company.items;
 
-import company.characters.Person;
+import com.company.company.characters.Person;
 
 public class Item_Artifact implements Item {
     private int attack_bonus;

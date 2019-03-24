@@ -1,7 +1,7 @@
-package company.characters;
+package com.company.company.characters;
 
-import company.Arena;
-import company.items.*;
+import com.company.company.Arena;
+import com.company.company.items.*;
 
 public abstract class Person {
     private int health;

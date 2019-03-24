@@ -1,9 +1,7 @@
-package company.items;
+package com.company.company.items;
 
-import company.characters.Person;
-import company.characters.Status;
-
-import javax.net.ssl.SSLEngineResult;
+import com.company.company.characters.Person;
+import com.company.company.characters.Status;
 
 public class Item_Potion implements Item {
     private int count;

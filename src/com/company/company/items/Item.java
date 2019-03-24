@@ -1,6 +1,6 @@
-package company.items;
+package com.company.company.items;
 
-import company.characters.Person;
+import com.company.company.characters.Person;
 
 public interface Item {
     public void drop_Item (Person user);

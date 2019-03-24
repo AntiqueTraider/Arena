@@ -1,6 +1,4 @@
-package company;
-
-import company.items.*;
+package com.company.company;
 
 public class Main {
 

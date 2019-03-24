@@ -1,6 +1,6 @@
-package company.characters;
+package com.company.company.characters;
 
-import company.Arena;
+import com.company.company.Arena;
 
 public class Person_Necromancer extends Person implements Undead_Features{
 

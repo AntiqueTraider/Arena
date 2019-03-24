@@ -1,9 +1,8 @@
-package company;
+package com.company.company;
 // поменял 0 и 1 в х в мувах
-import company.characters.*;
-import company.characters.necromancer_army.Dark_Knight;
-import company.characters.necromancer_army.Lich;
-import company.items.*;
+import com.company.company.characters.*;
+import com.company.company.characters.necromancer_army.Dark_Knight;
+import com.company.company.characters.necromancer_army.Lich;
 
 import java.util.Scanner;
 

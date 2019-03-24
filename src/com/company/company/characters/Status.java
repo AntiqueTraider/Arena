@@ -1,4 +1,4 @@
-package company.characters;
+package com.company.company.characters;
 
 public class Status {
     public enum Life_Status {
